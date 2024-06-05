@@ -1,0 +1,73 @@
+.notice-content {
+  background: transparent;
+}
+
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.wrapper ul {
+  list-style: none;
+}
+
+.wrapper ul li img {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper ul li {
+  width: 45px;
+  height: 45px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.5s ease;
+ margin: 10px;
+}
+
+
+.wrapper ul li .fa {
+  color: #D8E2DC;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.wrapper ul li:hover.facebook {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+}
+
+.wrapper ul li:hover.instagram {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+}
+
+.wrapper ul li:hover.whatsapp {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    margin-bottom: 20px;
+  }
+}
+
+
+@media screen and (max-width: 350px) {
+  .notice-content {
+   display: none;
+  }
+  
+} 
