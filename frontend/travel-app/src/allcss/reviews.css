@@ -146,31 +146,6 @@
     opacity: 0;
 }
 
-.delete-icon{
-    color: #000000;
-    width: 20px;
-    height: 20px;
-    transition: .3s ease;
-}
-
-.delete-comment:hover{
-    background: #FF7A00;
-    border: 1px solid #ffffff;
-    transition: .3s ease;
-}
-
-.delete-comment:hover .delete-icon{
-    color: #ffffff;
-    transition: .3s ease;
- 
-}
-
-.review-block:hover .delete-comment{
-    right: 8%;
-    bottom: 15%;
-    opacity: 1;
-}
-
 .navs-comments a{
     text-decoration: none;
     color: #000000;

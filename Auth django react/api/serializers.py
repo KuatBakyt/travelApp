@@ -18,12 +18,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
-            raise serializers.ValidationError("Passwords do not match!")
+            raise serializers.ValidationError("Пароль не совпадает!")
 
         password = attrs.get("password1", "")
         if len(password) < 8:
             raise serializers.ValidationError(
-                "Passwords must be at least 8 characters!")
+                "Пароль должен быть больше 8 значений или цифр!")
 
         return attrs
 
@@ -41,7 +41,7 @@ class UserLoginSerializer(serializers.Serializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Incorrect Credentials!")  
+        raise serializers.ValidationError("Не правильный аккаунт или пароль!")  
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,9 +59,11 @@ class TourSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'city', 'kind', 'time', 'price', 'discount', 'img_url', 'category', 'description']
 
 class CommentSerializer(serializers.ModelSerializer):
+    # user = CustomUserSerializer()  # Используем кастомный сериализатор пользователя
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'message', 'rate', 'user']  # Подставьте нужные вам поля комментария
 
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:

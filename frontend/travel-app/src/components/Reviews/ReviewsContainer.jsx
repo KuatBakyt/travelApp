@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Reviews from './Reviews';
-import { deleteCommentAcAcr, setCommentAcAcr, togglePreloaderActionCreater } from '../../redux/commentsReducer';
+import { setCommentAcAcr, togglePreloaderActionCreater } from '../../redux/commentsReducer';
 import withAuthRedirect from '../HOC/withAuthTedirect';
 import { getCommentsSuper, getIsLoad } from '../../redux/Selectors/commentsSelector'
 
@@ -69,13 +69,11 @@ let mapDispatchToProps = (dispatch) => {
     setComment: (comments) => {
       dispatch(setCommentAcAcr(comments));
     },
-    deleteComment: (id) => {
-      dispatch(deleteCommentAcAcr(id));
-    },
     togglePreloader: (status) => {
       dispatch(togglePreloaderActionCreater(status))
     }
   }
 }
+
 let AuthRedirect = withAuthRedirect(ReviewsContainer)
 export default connect(mapStateToProps, mapDispatchToProps)(AuthRedirect)

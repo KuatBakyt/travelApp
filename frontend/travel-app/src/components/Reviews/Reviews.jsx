@@ -12,7 +12,7 @@ let Reviews = ({ authUser, ...props }) => {
     navigate(`/addcomment`)
   }
 
-  let allComments = props.records.map(c => <PostReview email={c.email} user={c.user} message={c.message} id={c.id} key={c.id} deleteComment={props.deleteComment} authUser={authUser} rate={c.rate} />)
+  let allComments = props.records.map(c => <PostReview email={c.email} user={c.user} message={c.message} id={c.id} key={c.id} authUser={authUser} rate={c.rate} />)
 
   return (
     <div className="Reviews">

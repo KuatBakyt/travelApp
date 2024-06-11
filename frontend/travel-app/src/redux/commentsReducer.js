@@ -1,7 +1,6 @@
 const SET_COMMENTS = "SET_COMMENTS";
 const ADD_COMMENT = "ADD_COMMENT";
 const UPDATE_NEW_COMMENT = "UPDATE_NEW_COMMENT";
-const DELETE_COMMENT = "DELETE_COMMENT";
 const RATE = "RATE";
 const TOGGLE_PRELOADER = "TOGGLE_PRELOADER";
 
@@ -21,7 +20,7 @@ let commentsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 comments: action.comments,
-                arrcount: action.comments.filter(c => c.user.email == authUser.email),
+                arrcount: action.comments.filter(c => c.user == authUser.username),
                 allCommentsCount: state.arrcount.length
             }
         }
@@ -30,7 +29,8 @@ let commentsReducer = (state = initialState, action) => {
                 message: state.newCommentMessage,
                 id: state.comments.length + 1,
                 rate: state.rating,
-                user: JSON.parse(localStorage.getItem("user"))
+                user: JSON.parse(localStorage.getItem("username")),
+                useremail: JSON.parse(localStorage.getItem("useremail"))
             }
             fetch("http://localhost:8000/api/comments/", {
                 method: "POST",
@@ -64,25 +64,6 @@ let commentsReducer = (state = initialState, action) => {
                 newCommentMessage: action.newCommentMessageText,
             }
         }
-        // case DELETE_COMMENT: {
-        //     fetch(`http://localhost:8000/api/comments/${action.id}`, {
-        //         method: "DELETE",
-        //     })
-        //         .then((response) => {
-        //             if (!response.ok) {
-        //                 throw new Error('error HTTP, status' + response.status)
-        //             }
-        //             console.log("Успешно удален");
-        //         })
-        //         .catch((error) => {
-        //             console.log("Произошла ошибка", error);
-        //         })
-        //     const filteredComment = state.comments.filter(c => c.id != action.id);
-        //     return {
-        //         ...state,
-        //         comments: filteredComment
-        //     };
-        // }
         case RATE: {
           return {
             ...state,
@@ -101,8 +82,8 @@ export const setCommentAcAcr = (comments) => {
     return { type: SET_COMMENTS, comments: comments }
 }
 
-export const addCommentActionCreator = (time) => {
-    return { type: ADD_COMMENT, time: time }
+export const addCommentActionCreator = () => {
+    return { type: ADD_COMMENT}
 }
 
 export const updateNewCommentTextAC = (newCommentMessage) => {
@@ -110,10 +91,6 @@ export const updateNewCommentTextAC = (newCommentMessage) => {
         type: UPDATE_NEW_COMMENT,
         newCommentMessageText: newCommentMessage
     }
-}
-
-export const deleteCommentAcAcr = (id) => {
-    return { type: DELETE_COMMENT, id: id }
 }
 
 export const rateAcAcr = (value) => {

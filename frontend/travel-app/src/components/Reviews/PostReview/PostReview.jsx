@@ -3,32 +3,17 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import { IoIosStar } from "react-icons/io";
 
 function PostReview({authUser, ...props}) {
-
-  let deleteComment = () => { props.deleteComment(props.id) }
-
   return (
     <>
       <div className="review-block" >
-         {
-          (authUser.email == props.user.email)
-            ?
-            <div className='delete-comment' onClick={() => deleteComment(props.id)}>
-              <IoTrashBinSharp className='delete-icon' />
-            </div>
-            :
-            <span></span>
-        }
         <div className="review-top">
           <div className="review-profile">
             <div className="review-img">
-              <img src={props.user.urlImg == null || props.user.urlImg == "" ? "../img/ava.png"
-                :
-                (props.user.urlImg)
-              } />
+              <img src="../img/ava.png"/>
             </div>
 
             <div className="review-username">
-              <strong>{props.user.name}</strong>
+              <strong>{props.user}</strong>
             </div>
 
           </div>

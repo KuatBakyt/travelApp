@@ -5,12 +5,12 @@ import ItemsContainer from '../Items/ItemsContainer'
 import SearchContainer from '../Search/SearchContainer'
 import Carousel from 'react-bootstrap/Carousel';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import ButtonTourContainer from '../ButtonTour/ButtonTourContainer';
+import Buttontour from '../ButtonTour/Buttontour'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 
 function Main() {
-  const [alert, setAlert] = useState(false)
+  const [alertreq, setAlertReq] = useState(false)
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -24,13 +24,13 @@ function Main() {
   return (
     <>
     {
-      alert 
+      alertreq 
     ? <Alert variant="success" dismissible>
         <Alert.Heading>Уведомление</Alert.Heading>
         <p>
-          Ваша заявка успешно отправлена! Ожидайте звонка
+          Ваша заявка успешно отправлена! Ожидайте звонка.
         </p>
-        <Button onClick={() => setAlert(false)}>Ok</Button>
+        <Button onClick={() => setAlertReq(false)}>Ok</Button>
       </Alert>
       : <span></span>
     }
@@ -65,7 +65,7 @@ function Main() {
                   <h1>ГРУППОВЫЕ ЭКСКУРСИИ И ТУРЫ В АЛМАТЫ</h1>
                   <h5>Чтобы отлично провести время с близкими людьми, вам стоит ответственно подойти к выбору тура.</h5>
                   <div className='main-support'>
-                    <div className='main-btn' >Предложения</div>
+                    <div className='main-btn'onClick={handleShow} >Предложения</div>
                     <a href='tel: +7 747 620 28 79' className='phone'><img src="../img/phone.png" alt="" /> +7 747 620 28 79</a>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ function Main() {
           <Offcanvas.Header closeButton>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <ButtonTourContainer handleClose={handleClose} setAlert={setAlert}/>
+            <Buttontour handleClose={handleClose} setAlertReq={setAlertReq}/>
           </Offcanvas.Body>
         </Offcanvas>
     </>

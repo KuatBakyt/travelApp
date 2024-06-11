@@ -14,5 +14,6 @@ urlpatterns = [
     path('tours/', TourListCreate.as_view(), name='tour-list'),
     path('tours/<int:id>/', TourRetrieve.as_view(), name='tour-retrieve'),
     path('comments/', CommentListCreate.as_view(), name='comment-list'),
+    path('comments/<int:id>/', CommentRetrieve.as_view(), name='comment-retrieve'),
     path('requests/', RequestListCreate.as_view(), name='request-list')
 ]

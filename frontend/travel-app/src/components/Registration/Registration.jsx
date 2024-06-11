@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import s from "../../allcss/registration.module.css"
 import Form from 'react-bootstrap/Form';
+import PreLoader from "../Preloader/Preloader";
 
 export default function Registration(props) {
 	let navigate = useNavigate();
@@ -13,23 +14,28 @@ export default function Registration(props) {
 		password2: "",
 	});
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleChange = (e) => {
+
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,
 		});
 	};
-	const [successMessage, setSuccessMessage] = useState(null);
+
 	const [error, setError] = useState(null)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 		try {
 			const response = await axios.post("http://127.0.0.1:8000/api/register/", formData)
 			console.log("Success!", response.data)
 			props.createUser(response.data)
-			setSuccessMessage("Registration Successful!")
 			localStorage.setItem('user', JSON.stringify(response.data))
+			localStorage.setItem('useremail', JSON.stringify(response.data.email))
+			localStorage.setItem('username', JSON.stringify(response.data.username))
 			navigate("/")
 		}
 		catch (error) {
@@ -43,50 +49,58 @@ export default function Registration(props) {
 				})
 			}
 		}
+		finally {
+			setIsLoading(false)
+		}
 
 	};
 	return (
 		<div className={s.registration}>
 			<div className='container'>
-				{error && <p style={{ color: "red" }}>{error}</p>}
-				{successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-				<h3>Регистрация:</h3>
-				<Form>
-					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Имя</Form.Label>
-                        <Form.Control type="text"
-						name="username"
-						value={formData.username}
-						onChange={handleChange} />
-                    </Form.Group>
-					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Напишите Email</Form.Label>
-                        <Form.Control type="email"
-						name="email"
-						value={formData.email}
-						onChange={handleChange} />
-                    </Form.Group>
-					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea7">
-                        <Form.Label>Пароль</Form.Label>
-                        <Form.Control type="password"
-						name="password1"
-						value={formData.password1}
-						onChange={handleChange} />
-                    </Form.Group>
 
-					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea7">
-                        <Form.Label>Подтвердите пароль</Form.Label>
-                        <Form.Control type="password"
-						name="password2"
-						value={formData.password2}
-						onChange={handleChange} />
-                    </Form.Group>
-					
-					<button type="submit" className='m-2' onClick={handleSubmit}>
-					Создать аккаунт
-					</button>
-					<Link to='/login' className='m-2'>У меня есть аккаунт</Link>
-				</Form>
+
+				<h3>Регистрация:</h3>
+				{
+					isLoading ? <PreLoader />
+						:
+						<Form>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+								<Form.Label>Напишите Email</Form.Label>
+								<Form.Control type="email"
+									name="email"
+									value={formData.email}
+									onChange={handleChange} />
+							</Form.Group>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+								<Form.Label>Имя</Form.Label>
+								<Form.Control type="text"
+									name="username"
+									value={formData.username}
+									onChange={handleChange} />
+							</Form.Group>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea7">
+								<Form.Label>Пароль</Form.Label>
+								<Form.Control type="password"
+									name="password1"
+									value={formData.password1}
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea7">
+								<Form.Label>Подтвердите пароль</Form.Label>
+								<Form.Control type="password"
+									name="password2"
+									value={formData.password2}
+									onChange={handleChange} />
+							</Form.Group>
+
+							<button type="submit" className='m-2' onClick={handleSubmit}>
+								Создать аккаунт
+							</button>
+							<Link to='/login' className='m-2'>У меня есть аккаунт</Link>
+						</Form>
+				}
+				{error && <div className={`alert alert-danger m-3 ${s.alert}`}>{error}</div>}
 			</div>
 		</div>
 	);

@@ -1,18 +1,24 @@
 import React from 'react'
 import PayOrder from './PayOrder/PayOrder'
 import "../../allcss/pay.css"
+import { useNavigate } from 'react-router-dom'
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 function Pay({ orders, ...props }) {
+  let navigate = useNavigate()
 
   let orderElements = orders.map(c => <PayOrder key={c.id} id={c.id} item={c} deleteOrder={props.deleteOrder} />)
 
   let sum = 0;
   orders.forEach(e => { sum += Number.parseFloat(e.price) })
 
-  console.log(orders.length );
+  console.log(orders.length);
   return (
     <div className='container'>
       <div className='pay-content'>
+        <div className='btn-back' onClick={() => navigate(-1)}>
+          < FaArrowLeftLong size={30} />
+        </div>
         <ol className='pay-order'>
           {orderElements}
         </ol>

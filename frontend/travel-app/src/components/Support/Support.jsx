@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "../../allcss/support.css"
-import ButtonTourContainer from '../ButtonTour/ButtonTourContainer';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Buttontour from '../ButtonTour/Buttontour';
 
 function Support() {
     
@@ -29,7 +29,7 @@ function Support() {
                 <Offcanvas.Header closeButton>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <ButtonTourContainer />
+                    <Buttontour/>
                 </Offcanvas.Body>
             </Offcanvas>
         </div>

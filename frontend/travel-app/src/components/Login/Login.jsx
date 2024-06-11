@@ -5,14 +5,11 @@ import s from "../../allcss/login.module.css"
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
+import PreLoader from "../Preloader/Preloader";
 
 export default function Login() {
   let navigate = useNavigate();
   const [eyes, setEye] = useState(true)
-  const [newUser, SetNewUser] = useState({
-    email: null,
-    password: null
-  })
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,21 +23,18 @@ export default function Login() {
     });
   };
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLoading) {
-      return
-    }
 
     setIsLoading(true);
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login/", formData)
       console.log("Success!", response.data)
-      setSuccessMessage("Login Successful!")
       localStorage.setItem('user', JSON.stringify(response.data))
+      localStorage.setItem('useremail', JSON.stringify(response.data.email))
+      localStorage.setItem('username', JSON.stringify(response.data.username))
       navigate("/")
     }
     catch (error) {
@@ -63,10 +57,11 @@ export default function Login() {
   return (
     <div className="container">
       <div className={s.login}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <h3>Login:</h3>
-        <Form>
+        <h3>Логин:</h3>
+        {
+          isLoading ? <PreLoader />
+					:
+          <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Напишите Email</Form.Label>
             <Form.Control required type="email"
@@ -97,7 +92,9 @@ export default function Login() {
           </button>
           <Link to='/register' className='m-3' >Зарегистрироваться</Link>
         </Form>
+        }
       </div>
+      {error && <div className={`alert alert-danger m-3 ${s.alert}`}>{error}</div>}
     </div>
 
   )
